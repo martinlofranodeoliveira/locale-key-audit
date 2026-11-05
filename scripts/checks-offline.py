@@ -39,7 +39,7 @@ def main():
   scratch=Path(temporary);source=scratch/'source';copy(ROOT,source);assert hashes(source)==before
   if a.oracle_dir:
    original=Path(a.oracle_dir).resolve(strict=True);frozen=hashes(original);oracle=scratch/'oracle';copy(original,oracle);assert hashes(oracle)==frozen
-  command=['bwrap','--unshare-all',*(['--unshare-user'] if os.geteuid()!=0 else []),'--disable-userns','--cap-drop','ALL','--die-with-parent','--new-session','--clearenv']
+  command=['bwrap','--unshare-all','--unshare-user','--disable-userns','--cap-drop','ALL','--die-with-parent','--new-session','--clearenv']
   for n in ['usr','bin','sbin','lib','lib64']:
    path=Path('/')/n
    if path.is_symlink():command+=['--symlink',os.readlink(path),'/'+n]
